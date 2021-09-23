@@ -51,7 +51,7 @@ namespace DataAccess.Concrete
 
         public void Update(Item item)
         {
-            Item itemToUpdate = _items.SingleOrDefault(i => i.Name == item.Name);
+            Item itemToUpdate = _items.SingleOrDefault(i => i.Id == item.Id);
             itemToUpdate.Name = item.Name;
             itemToUpdate.Quality = item.Quality;
             itemToUpdate.SellIn = item.SellIn;
@@ -59,7 +59,10 @@ namespace DataAccess.Concrete
 
         public void UpdateQuality(Item item)
         {
-            throw new NotImplementedException();
+            Item itemToUpdate = _items.SingleOrDefault(i => i.Id == item.Id);
+            itemToUpdate.Name = item.Name;
+            itemToUpdate.Quality = item.Quality;
+            itemToUpdate.SellIn = item.SellIn;
         }
     }
 }
