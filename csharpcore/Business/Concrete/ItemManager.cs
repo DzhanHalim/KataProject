@@ -34,8 +34,9 @@ namespace Business.Concrete
             {
 
            
-            IResult result = BusinessRule.Run(CheckItemQualityMin(item), 
-                CheckItemQualityMax(item));
+            IResult result = BusinessRule.Run(CheckItemsNameAgedBrie(item), CheckItemsNameBackstage(item),
+               CheckItemsName(item));
+                 
             
             _itemDal.UpdateQuality(item);
             }
@@ -45,51 +46,82 @@ namespace Business.Concrete
 
         // BusinessRules 
 
-        private IResult CheckItemsName(Item item)
+        
+        private IResult CheckItemsNameAgedBrie(Item item)
         {
-            List<Item> Items = _itemDal.GetAll();
-            for (var i = 0; i < Items.Count; i++)
+           if(item.Name == "Aged Brie")
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                if (item.Quality < 50 && item.SellIn >0)
                 {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
+                    item.Quality = item.Quality + 1;
+                     
+                }
+                else if(item.SellIn <= 0)
+                {
+                    item.Quality = 0;
                 }
             }
+            return null;
+
+        }
+        private IResult CheckItemsName(Item item)
+        {
+            if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert" 
+                && item.Name != "Sulfuras, Hand of Ragnaros" && item.Quality > 0 && item.Quality < 50)
+            {
+                if (item.SellIn < 0 & item.Quality>0)
+                {
+                    if (item.Quality - 2 > 0)
+                    {
+                        item.Quality -= 2;
+
+                    }
+                    item.Quality = 0;
+ 
+                }
+                else
+                {
+                    item.Quality++;
+                }
                 
-        }
-        private IResult CheckItemQualityMin(Item item)
-        {
-            if (item.Quality < 0)
-            {
-                return new ErrorResult(Messages.ItemQualityNegative);
+                    
+                
             }
             return null;
 
         }
-        private IResult CheckItemQualityMax(Item item)
+         
+            private IResult CheckItemsNameBackstage(Item item)
         {
-            if (item.Quality > 50)
+            if (item.Name == "Backstage passes to a TAFKAL80ETC concert" && item.Quality < 50)
             {
-                return new ErrorResult(Messages.ItemQualityMax);
+                item.Quality++;
+                if (item.SellIn <= 10 && item.SellIn <= 5 && item.SellIn > 0) 
+                {
+                    
+                        item.Quality +=2;
+                     
+                }
+
+              else  if (item.SellIn <=10 && item.SellIn > 0)
+                {
+                     
+                        item.Quality += 1;
+                     
+                }
+                 if (item.SellIn <= 0)
+                {
+                    item.Quality = 0;
+                }
             }
             return null;
+           
 
         }
-        private IResult CheckSellingDate(Item item)
-        {
-            if (item.Quality < 0)
-            {
-                return new ErrorResult(Messages.ItemQualityNegative);
-            }
-            return null;
-
-        }
+         
+        
+        
+         
 
 
 
