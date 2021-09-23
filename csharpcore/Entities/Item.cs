@@ -1,6 +1,8 @@
-﻿namespace GildedRoseKata
+﻿using Entities.Abstract;
+
+namespace GildedRoseKata
 {
-    public class Item
+    public class Item :IEntity
     {
         public string Name { get; set; }
         public int SellIn { get; set; }
