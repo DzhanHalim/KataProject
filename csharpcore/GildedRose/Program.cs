@@ -1,4 +1,8 @@
-﻿using Entities.Concrete.GildedRoseKata;
+﻿using Business.Abstract;
+using Business.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete;
+using Entities.Concrete.GildedRoseKata;
 using System;
 using System.Collections.Generic;
 
@@ -8,9 +12,10 @@ namespace GildedRoseKata
     {
         public static void Main(string[] args)
         {
+             
             Console.WriteLine("OMGHAI!");
 
-            IList<Item> Items = new List<Item>{
+            List<Item> Items = new List<Item>{
                 new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                 new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
                 new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
@@ -37,8 +42,8 @@ namespace GildedRoseKata
 				// this conjured item does not work properly yet
 				new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
-
-            var app = new GildedRose(Items);
+            ItemManager itemManager = new ItemManager(new InMemoryItemsDal(Items));
+            //var app = new GildedRose(Items);
 
 
             for (var i = 0; i < 31; i++)
@@ -50,7 +55,8 @@ namespace GildedRoseKata
                     System.Console.WriteLine(Items[j].Name + ", " + Items[j].SellIn + ", " + Items[j].Quality);
                 }
                 Console.WriteLine("");
-                app.UpdateQuality();
+                //app.UpdateQuality();
+                itemManager.UpdateQuality();
             }
         }
     }

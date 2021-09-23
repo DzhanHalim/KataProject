@@ -56,5 +56,10 @@ namespace DataAccess.Concrete
             itemToUpdate.Quality = item.Quality;
             itemToUpdate.SellIn = item.SellIn;
         }
+
+        public void UpdateQuality(Item item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

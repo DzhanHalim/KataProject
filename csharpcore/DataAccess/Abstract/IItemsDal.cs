@@ -9,6 +9,7 @@ namespace DataAccess.Abstract
         List<Item> GetAll();
         void Add(Item item);
         void Update(Item item);
+        void UpdateQuality(Item item);
         void Delete(Item item);
         List<Item> GetByName(string name);
     }
