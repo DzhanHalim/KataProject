@@ -1,0 +1,2 @@
+# KataProject
+KataProject refactoring
