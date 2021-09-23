@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Entities.Concrete.GildedRoseKata;
+using System.Collections.Generic;
 
 namespace GildedRoseKata
 {
